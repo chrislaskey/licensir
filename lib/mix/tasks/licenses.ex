@@ -26,12 +26,12 @@ defmodule Mix.Tasks.Licenses do
   end
 
   defp print_license(%{name: name, version: version, license: license}) do
-    link = "\thttps://hex.pm/packages/#{name}"
+    link = "https://hex.pm/packages/#{name}"
 
     [
-      name <> ",",
-      (version || ","),
-      color(license),
+      name <> "\t",
+      (version || "\t"),
+      color(license) <> "\t",
       link,
       :reset,
       "\n"
