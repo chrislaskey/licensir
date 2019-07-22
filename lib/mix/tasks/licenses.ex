@@ -26,10 +26,13 @@ defmodule Mix.Tasks.Licenses do
   end
 
   defp print_license(%{name: name, version: version, license: license}) do
+    link = "\thttps://hex.pm/packages/#{name}"
+
     [
-      String.pad_trailing(name <> " " <> (version || ""), @name_width),
-      "-> ",
+      name <> ",",
+      (version || ","),
       color(license),
+      link,
       :reset,
       "\n"
     ]
