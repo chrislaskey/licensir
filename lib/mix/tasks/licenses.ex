@@ -10,8 +10,6 @@ defmodule Mix.Tasks.Licenses do
   @shortdoc "Lists each dependency's licenses"
   @recursive true
 
-  @name_width 24
-
   def run(argv) do
     Mix.Shell.IO.info([:yellow, "Notice: This is not a legal advice. Use the information below at your own risk."])
 
