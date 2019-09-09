@@ -42,7 +42,7 @@ defmodule Licensir.FileAnalyzer do
       |> Enum.take(length(sections) - 3)
       |> Enum.join("/")
 
-    license_dir = "#{root_dir}/licenses/#{app}"
+    license_dir = "#{root_dir}/#{@license_dir}/#{app}"
     license_file = "#{license_dir}/LICENSE.txt"
 
     if :ok == File.mkdir_p(license_dir) do
