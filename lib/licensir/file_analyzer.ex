@@ -1,4 +1,7 @@
 defmodule Licensir.FileAnalyzer do
+  # The directory to store license files in
+  @license_dir "licenses"
+
   # The file names to check for licenses
   @license_files ["LICENSE", "LICENSE.md", "LICENSE.txt"]
 
@@ -20,6 +23,7 @@ defmodule Licensir.FileAnalyzer do
     Enum.find_value(@license_files, fn file_name ->
       dir_path
       |> Path.join(file_name)
+      |> save_file()
       |> File.read()
       |> case do
         {:ok, content} -> analyze_content(content)
@@ -27,6 +31,28 @@ defmodule Licensir.FileAnalyzer do
       end
     end)
   end
+
+  # Save license files to a local directory
+  defp save_file(file_path) when is_bitstring(file_path) do
+    sections = String.split(file_path, "/")
+    app = Enum.at(sections, length(sections) - 2)
+
+    root_dir =
+      sections
+      |> Enum.take(length(sections) - 3)
+      |> Enum.join("/")
+
+    license_dir = "#{root_dir}/licenses/#{app}"
+    license_file = "#{license_dir}/LICENSE.txt"
+
+    if :ok == File.mkdir_p(license_dir) do
+      File.cp(file_path, license_file)
+    end
+
+    file_path
+  end
+
+  defp save_file(path), do: path
 
   # Returns the first license that matches
   defp analyze_content(content) do
